@@ -1,14 +1,55 @@
-[gd_scene load_steps=4 format=3 uid="uid://dhnpfh08p4kwj"]
+[gd_scene load_steps=12 format=3 uid="uid://dhnpfh08p4kwj"]
 
 [ext_resource type="Script" uid="uid://chmm6iwtovx6n" path="res://scripts/template.gd" id="1_1sl2q"]
-[ext_resource type="Texture2D" uid="uid://dfyaqnxmkgtsi" path="res://games/katzensprung/image.png" id="1_uxr40"]
-[ext_resource type="Texture2D" uid="uid://c6ckhu2n0ais2" path="res://assets/button.png" id="2_1sl2q"]
+[ext_resource type="Shader" uid="uid://dbh3pss3puepm" path="res://bg_pattern.gdshader" id="2_ffqna"]
+[ext_resource type="Shader" uid="uid://cl7rr64irxp0e" path="res://rgb.gdshader" id="2_p8kx1"]
+[ext_resource type="Texture2D" uid="uid://cphk1bw21hxoj" path="res://icon.svg" id="2_wkpiw"]
+[ext_resource type="Texture2D" uid="uid://bpnebnbg3sjjo" path="res://assets/own-button-2.png" id="3_ffqna"]
+[ext_resource type="Texture2D" uid="uid://bk0cgogt71qiy" path="res://assets/button_unpressed.png" id="4_e4o0e"]
+[ext_resource type="Texture2D" uid="uid://cj83iwandscow" path="res://assets/button_pressed.png" id="5_a8moi"]
 
-[node name="Template" type="Panel"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e7520"]
+shader = ExtResource("2_p8kx1")
+shader_parameter/brightness = -1.0
+shader_parameter/contrast = 1.0
+shader_parameter/saturation = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x1ux6"]
+shader = ExtResource("2_ffqna")
+shader_parameter/speed = 0.1
+shader_parameter/speed2 = 0.1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ffqna"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p8kx1"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="Template" type="Panel" node_paths=PackedStringArray("title_label", "description_label", "image_rect", "button_progress_bar")]
 custom_minimum_size = Vector2(1152, 648)
 offset_right = 1152.0
 offset_bottom = 648.0
 script = ExtResource("1_1sl2q")
+title_label = NodePath("Title")
+description_label = NodePath("Description")
+image_rect = NodePath("Image")
+button_progress_bar = NodePath("ButtonProgressBar")
+
+[node name="ColorBackground" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_e7520")
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
+
+[node name="PatternBackground" type="TextureRect" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_x1ux6")
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("3_ffqna")
+stretch_mode = 1
 
 [node name="Title" type="RichTextLabel" parent="."]
 layout_mode = 0
@@ -17,6 +58,7 @@ offset_top = 59.0
 offset_right = 884.0
 offset_bottom = 109.0
 theme_override_font_sizes/normal_font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_ffqna")
 text = "Titel des Spiels"
 fit_content = true
 scroll_active = false
@@ -29,39 +71,66 @@ offset_top = 147.0
 offset_right = 1100.0
 offset_bottom = 476.0
 theme_override_font_sizes/normal_font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_p8kx1")
 text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
 
 [node name="Image" type="TextureRect" parent="."]
-layout_mode = 0
+layout_mode = 1
 offset_left = 50.0
 offset_top = 50.0
 offset_right = 590.0
 offset_bottom = 590.0
-texture = ExtResource("1_uxr40")
+texture = ExtResource("2_wkpiw")
 expand_mode = 2
 stretch_mode = 6
 
 [node name="CoolImageEffect" type="CPUParticles2D" parent="Image"]
 position = Vector2(-50, -50)
+emitting = false
 amount = 120
 
-[node name="StartButtonImage" type="TextureRect" parent="."]
+[node name="ButtonProgressBar" type="TextureProgressBar" parent="."]
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 715.0
-offset_top = 507.0
-offset_right = 832.0
-offset_bottom = 624.0
-texture = ExtResource("2_1sl2q")
-expand_mode = 1
+offset_left = 800.0
+offset_top = 512.0
+offset_right = 900.0
+offset_bottom = 612.0
+max_value = 2.0
+step = 0.01
+fill_mode = 4
+nine_patch_stretch = true
+texture_under = ExtResource("4_e4o0e")
+texture_progress = ExtResource("5_a8moi")
 
-[node name="ButtonText" type="RichTextLabel" parent="StartButtonImage"]
-layout_mode = 0
-offset_left = -59.0
-offset_top = 39.0
-offset_right = 177.0
-offset_bottom = 153.0
-theme_override_font_sizes/normal_font_size = 20
-text = "Start 
-Game"
-scroll_active = false
-horizontal_alignment = 1
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="Image" type="TextureRect" parent="HBoxContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("2_wkpiw")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CoolImageEffect" type="CPUParticles2D" parent="HBoxContainer/MarginContainer/Image"]
+position = Vector2(-50, -50)
+emitting = false
+amount = 120
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3

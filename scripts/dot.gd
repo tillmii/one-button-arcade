@@ -6,4 +6,4 @@ var selected: bool = false:
 		if selected:
 			self.modulate = Color.RED
 		else:
-			self.modulate = Color.BLACK
+			self.modulate = Color.WHITE

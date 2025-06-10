@@ -1,9 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://brpdh2dqytd2"]
+[gd_scene load_steps=2 format=3 uid="uid://brpdh2dqytd2"]
 
 [ext_resource type="Script" uid="uid://bgp0eqodx1h0v" path="res://scripts/application.gd" id="1_wj04o"]
-[ext_resource type="PackedScene" uid="uid://dhnpfh08p4kwj" path="res://scenes/template.tscn" id="2_6stev"]
 
-[node name="Application" type="Control" node_paths=PackedStringArray("panel_indicator")]
+[node name="Application" type="Control" node_paths=PackedStringArray("panel_indicator", "panels_hbox")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,30 +10,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wj04o")
-panel_indicator = NodePath("PanelIndicator")
+panel_indicator = NodePath("MarginContainer/PanelIndicator")
+panels_hbox = NodePath("Panels")
 
 [node name="Panels" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 1
 offset_right = 40.0
 offset_bottom = 40.0
+theme_override_constants/separation = 0
 
-[node name="Template" parent="Panels" instance=ExtResource("2_6stev")]
-layout_mode = 2
-
-[node name="Template2" parent="Panels" instance=ExtResource("2_6stev")]
-layout_mode = 2
-
-[node name="PanelIndicator" type="HBoxContainer" parent="."]
-custom_minimum_size = Vector2(0, 20)
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -106.0
-offset_top = -20.0
-offset_right = 106.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_constants/margin_bottom = 15
+
+[node name="PanelIndicator" type="HBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+alignment = 1
