@@ -1,0 +1,67 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhnpfh08p4kwj"]
+
+[ext_resource type="Script" uid="uid://chmm6iwtovx6n" path="res://scripts/template.gd" id="1_1sl2q"]
+[ext_resource type="Texture2D" uid="uid://dfyaqnxmkgtsi" path="res://games/katzensprung/image.png" id="1_uxr40"]
+[ext_resource type="Texture2D" uid="uid://c6ckhu2n0ais2" path="res://assets/button.png" id="2_1sl2q"]
+
+[node name="Template" type="Panel"]
+custom_minimum_size = Vector2(1152, 648)
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("1_1sl2q")
+
+[node name="Title" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 629.0
+offset_top = 59.0
+offset_right = 884.0
+offset_bottom = 109.0
+theme_override_font_sizes/normal_font_size = 36
+text = "Titel des Spiels"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Description" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 628.0
+offset_top = 147.0
+offset_right = 1100.0
+offset_bottom = 476.0
+theme_override_font_sizes/normal_font_size = 24
+text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+
+[node name="Image" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 590.0
+offset_bottom = 590.0
+texture = ExtResource("1_uxr40")
+expand_mode = 2
+stretch_mode = 6
+
+[node name="CoolImageEffect" type="CPUParticles2D" parent="Image"]
+position = Vector2(-50, -50)
+amount = 120
+
+[node name="StartButtonImage" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 715.0
+offset_top = 507.0
+offset_right = 832.0
+offset_bottom = 624.0
+texture = ExtResource("2_1sl2q")
+expand_mode = 1
+
+[node name="ButtonText" type="RichTextLabel" parent="StartButtonImage"]
+layout_mode = 0
+offset_left = -59.0
+offset_top = 39.0
+offset_right = 177.0
+offset_bottom = 153.0
+theme_override_font_sizes/normal_font_size = 20
+text = "Start 
+Game"
+scroll_active = false
+horizontal_alignment = 1

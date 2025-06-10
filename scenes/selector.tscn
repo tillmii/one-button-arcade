@@ -1,41 +1,40 @@
-[gd_scene format=3 uid="uid://brpdh2dqytd2"]
+[gd_scene load_steps=3 format=3 uid="uid://brpdh2dqytd2"]
 
-[node name="Node2D" type="Control"]
+[ext_resource type="Script" uid="uid://bgp0eqodx1h0v" path="res://scripts/application.gd" id="1_wj04o"]
+[ext_resource type="PackedScene" uid="uid://dhnpfh08p4kwj" path="res://scenes/template.tscn" id="2_6stev"]
+
+[node name="Application" type="Control" node_paths=PackedStringArray("panel_indicator")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_wj04o")
+panel_indicator = NodePath("PanelIndicator")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panels" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Template" parent="Panels" instance=ExtResource("2_6stev")]
+layout_mode = 2
+
+[node name="Template2" parent="Panels" instance=ExtResource("2_6stev")]
+layout_mode = 2
+
+[node name="PanelIndicator" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
+offset_left = -106.0
+offset_top = -20.0
+offset_right = 106.0
 grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Title" type="RichTextLabel" parent="Panel"]
-layout_mode = 0
-offset_left = 692.0
-offset_top = 81.0
-offset_right = 732.0
-offset_bottom = 121.0
-theme_override_font_sizes/normal_font_size = 36
-text = "Titel des Spiels"
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-
-[node name="Description" type="RichTextLabel" parent="Panel"]
-layout_mode = 0
-offset_left = 692.0
-offset_top = 149.0
-offset_right = 1090.0
-offset_bottom = 601.0
-theme_override_font_sizes/normal_font_size = 24
-text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="Panel"]
-amount = 120
+grow_vertical = 0

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2la0q4a0d742"]
+
+[ext_resource type="Texture2D" uid="uid://cphk1bw21hxoj" path="res://icon.svg" id="1_c4igg"]
+[ext_resource type="Script" uid="uid://dv7geechgpjj3" path="res://scripts/dot.gd" id="2_1c7to"]
+
+[node name="Dot" type="TextureRect"]
+texture = ExtResource("1_c4igg")
+expand_mode = 2
+script = ExtResource("2_1c7to")
