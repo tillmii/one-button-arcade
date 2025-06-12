@@ -1,0 +1,207 @@
+[gd_scene load_steps=19 format=3 uid="uid://dhnpfh08p4kwj"]
+
+[ext_resource type="Script" uid="uid://chmm6iwtovx6n" path="res://scripts/game_panel.gd" id="1_h4500"]
+[ext_resource type="Shader" uid="uid://cl7rr64irxp0e" path="res://shaders/rgb.gdshader" id="2_n23fl"]
+[ext_resource type="Shader" uid="uid://dbh3pss3puepm" path="res://shaders/bg_pattern.gdshader" id="3_x85hg"]
+[ext_resource type="Texture2D" uid="uid://bpnebnbg3sjjo" path="res://assets/own-button-pattern.png" id="4_nv8ta"]
+[ext_resource type="Texture2D" uid="uid://odot8ktdauev" path="res://assets/portal.jpg" id="6_6mve1"]
+[ext_resource type="Shader" uid="uid://dmm3tycb7cnhl" path="res://shaders/portal.gdshader" id="6_h4500"]
+[ext_resource type="Texture2D" uid="uid://cphk1bw21hxoj" path="res://icon.svg" id="7_4nols"]
+[ext_resource type="Shader" uid="uid://dtpgi2g0014xi" path="res://shaders/outline.gdshader" id="8_rst8r"]
+[ext_resource type="FontFile" uid="uid://vksi3e62ka4a" path="res://fonts/Pinko-j99pl.ttf" id="9_wl8cg"]
+[ext_resource type="FontFile" uid="uid://ddsmrjtea7fy6" path="res://fonts/QuiteMagicalRegular-8VA2.ttf" id="10_pjdp1"]
+[ext_resource type="Texture2D" uid="uid://bk0cgogt71qiy" path="res://assets/button_unpressed.png" id="11_s2vv8"]
+[ext_resource type="Texture2D" uid="uid://cj83iwandscow" path="res://assets/button_pressed.png" id="12_dgefb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e7520"]
+shader = ExtResource("2_n23fl")
+shader_parameter/brightness = -1.0
+shader_parameter/contrast = 1.0
+shader_parameter/saturation = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x1ux6"]
+shader = ExtResource("3_x85hg")
+shader_parameter/speed = 0.1
+shader_parameter/speed2 = 0.1
+
+[sub_resource type="Shader" id="Shader_07x2p"]
+code = "shader_type canvas_item;
+
+uniform sampler2D spin_texture: hint_screen_texture;
+uniform bool clockwise = true;
+uniform float speed : hint_range(0.0, 2.0) = 1.0;
+
+vec2 rotate(vec2 uv, vec2 pivot, float angle)
+{
+	mat2 rotation = mat2(vec2(sin(angle), -cos(angle)),
+			vec2(cos(angle), sin(angle)));
+
+    uv -= pivot;
+    uv = uv * rotation;
+    uv += pivot;
+    return uv;
+}
+
+void fragment()
+{
+	float direction = clockwise ? 1.0 : -1.0;
+	vec2 rotated_uv = rotate(UV, vec2(0.5), TIME * speed * direction);
+	COLOR = vec4(0.0, sin(30.0 * TIME) + 1.5, sin(30.0 * TIME) + 1.5, 1.0) * texture(TEXTURE, rotated_uv);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sthte"]
+shader = SubResource("Shader_07x2p")
+shader_parameter/clockwise = true
+shader_parameter/speed = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n23fl"]
+shader = ExtResource("6_h4500")
+shader_parameter/portal_texture = ExtResource("6_6mve1")
+shader_parameter/portal_tint = Color(0, 1, 1, 1)
+shader_parameter/vortex_effect_radius = 0.6
+shader_parameter/twist_strength = 0.0
+shader_parameter/pulsation_speed = 0.0
+shader_parameter/breath_magnitude = -1.86265e-08
+shader_parameter/overall_rotation_speed = -0.5
+shader_parameter/texture_scroll_speed_x = -2.2352e-08
+shader_parameter/texture_scroll_speed_y = -2.2352e-08
+shader_parameter/edge_softness = 0.2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sb0ua"]
+shader = ExtResource("8_rst8r")
+shader_parameter/color = Color(1, 0, 0, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 2
+shader_parameter/inside = true
+shader_parameter/add_margins = false
+
+[node name="GamePanel" type="Panel" node_paths=PackedStringArray("title_label", "description_label", "image_rect", "button_progress_bar")]
+custom_minimum_size = Vector2(1152, 648)
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("1_h4500")
+title_label = NodePath("LeftRightSplit/RightSide/VerticalBoxRightSide/TitleContainer/Title")
+description_label = NodePath("LeftRightSplit/RightSide/VerticalBoxRightSide/DescriptionContainer/Description")
+image_rect = NodePath("LeftRightSplit/LeftSide/ImageContainer/Image")
+button_progress_bar = NodePath("LeftRightSplit/RightSide/VerticalBoxRightSide/ButtonContainer/ButtonProgressBar")
+
+[node name="ColorBackground" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_e7520")
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
+
+[node name="PatternBackground" type="TextureRect" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_x1ux6")
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("4_nv8ta")
+stretch_mode = 1
+
+[node name="LeftRightSplit" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LeftSide" type="MarginContainer" parent="LeftRightSplit"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 60
+
+[node name="BorderAnimImage" type="TextureRect" parent="LeftRightSplit/LeftSide"]
+visible = false
+material = SubResource("ShaderMaterial_sthte")
+layout_mode = 2
+texture = ExtResource("6_6mve1")
+expand_mode = 2
+stretch_mode = 6
+
+[node name="ImageContainer" type="MarginContainer" parent="LeftRightSplit/LeftSide"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Image" type="TextureRect" parent="LeftRightSplit/LeftSide/ImageContainer"]
+material = SubResource("ShaderMaterial_n23fl")
+layout_mode = 2
+texture = ExtResource("7_4nols")
+expand_mode = 2
+stretch_mode = 6
+
+[node name="RightSide" type="MarginContainer" parent="LeftRightSplit"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 20
+
+[node name="VerticalBoxRightSide" type="VBoxContainer" parent="LeftRightSplit/RightSide"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="TitleContainer" type="MarginContainer" parent="LeftRightSplit/RightSide/VerticalBoxRightSide"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="Title" type="RichTextLabel" parent="LeftRightSplit/RightSide/VerticalBoxRightSide/TitleContainer"]
+material = SubResource("ShaderMaterial_sb0ua")
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("9_wl8cg")
+theme_override_font_sizes/normal_font_size = 60
+text = "Titel des Spiels"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="DescriptionContainer" type="MarginContainer" parent="LeftRightSplit/RightSide/VerticalBoxRightSide"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_right = 40
+
+[node name="Description" type="RichTextLabel" parent="LeftRightSplit/RightSide/VerticalBoxRightSide/DescriptionContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("10_pjdp1")
+theme_override_font_sizes/normal_font_size = 36
+text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+
+[node name="ButtonContainer" type="MarginContainer" parent="LeftRightSplit/RightSide/VerticalBoxRightSide"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="ButtonProgressBar" type="TextureProgressBar" parent="LeftRightSplit/RightSide/VerticalBoxRightSide/ButtonContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+max_value = 2.0
+step = 0.01
+fill_mode = 4
+nine_patch_stretch = true
+texture_under = ExtResource("11_s2vv8")
+texture_progress = ExtResource("12_dgefb")

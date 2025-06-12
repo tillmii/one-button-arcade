@@ -103,7 +103,7 @@ void fragment() {
 
     // --- 10. Texture Sampling and Final Color ---
     vec4 texture_color = texture(portal_texture, fract(final_scrolling_uv));
-    
+
 	float margin = 0.1;
 	float distance_to_center = length(UV - vec2(0.5, 0.5));
 	if (distance_to_center > 0.45) {

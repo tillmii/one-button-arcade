@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bostj502v8i2"
-path="res://.godot/imported/bg_pattern.png-1aab2ba942560caca3ab3af4cfe31594.ctex"
+uid="uid://c6r1gcqdh41wl"
+path="res://.godot/imported/sunrays.png-de74094f07989b5d8b13046b0c50a88a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/bg_pattern.png"
-dest_files=["res://.godot/imported/bg_pattern.png-1aab2ba942560caca3ab3af4cfe31594.ctex"]
+source_file="res://assets/sunrays.png"
+dest_files=["res://.godot/imported/sunrays.png-de74094f07989b5d8b13046b0c50a88a.ctex"]
 
 [params]
 

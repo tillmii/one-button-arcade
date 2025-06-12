@@ -1,9 +1,14 @@
+class_name Dot
 extends TextureRect
 
-var selected: bool = false:
-	set(value):
-		selected = value
-		if selected:
-			self.modulate = Color.RED
-		else:
-			self.modulate = Color.WHITE
+
+@onready var application: Application = self.get_parent().get_parent().get_parent()
+
+
+func _ready() -> void:
+	application.connect("set_active_dot", set_active_dot)
+
+func set_active_dot(active_dot: Dot):
+	self.modulate = Color.WHITE
+	if active_dot == self:
+		self.modulate = Color.RED
