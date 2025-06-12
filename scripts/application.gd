@@ -9,7 +9,7 @@ signal set_active_panel(active_panel: GamePanel)
 signal set_active_dot(active_dot: Dot)
 
 # paths and scenes
-const _GAMES_FOLDER_PATH: String = "res://games/"
+const _GAMES_FOLDER_PATH: String = "res://one-button-games/"
 const _PANEL_TEMPLATE_SCENE = preload("res://scenes/game_panel.tscn")
 const _DOT_SCENE = preload("res://scenes/dot.tscn")
 
@@ -40,7 +40,7 @@ func _ready() -> void:
 		# get panel info from "README.md"
 		var new_read_me: String = FileAccess.open(str(_GAMES_FOLDER_PATH, "/", directory, "/", "README.md"), FileAccess.READ).get_as_text()
 		var regex = RegEx.new()
-		regex.compile("#\\s*(.*)\\n\\n(.*)")
+		regex.compile("#\\s*(.*)\\n(.*)")
 		
 		# set panel info
 		var new_panel_title: String = regex.search(new_read_me).get_string(1)

@@ -18,8 +18,3 @@ config/icon="res://icon.svg"
 [autoload]
 
 GitLoader="*res://scripts/git_loader.gd"
-
-[rendering]
-
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"

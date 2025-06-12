@@ -1,8 +1,11 @@
 # one-button-arcade
 
 TODO:
-	- read in games from git and update games folder
 	- background animation (gmtk shader) (properly)
+	
+	- particle effect
+	- fonts?
+	- 
 
 Template for "README.md" file:
 # Title

@@ -1,6 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://brpdh2dqytd2"]
+[gd_scene load_steps=6 format=3 uid="uid://brpdh2dqytd2"]
 
 [ext_resource type="Script" uid="uid://bgp0eqodx1h0v" path="res://scripts/application.gd" id="1_wj04o"]
+[ext_resource type="Shader" uid="uid://dbh3pss3puepm" path="res://shaders/bg_pattern.gdshader" id="2_7ji5i"]
+
+[sub_resource type="Gradient" id="Gradient_wj04o"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_h4500"]
+gradient = SubResource("Gradient_wj04o")
+fill_to = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6stev"]
+shader = ExtResource("2_7ji5i")
+shader_parameter/gradient = SubResource("GradientTexture2D_h4500")
+shader_parameter/circle_color = Color(0.95, 0.490833, 0, 1)
+shader_parameter/circle_multiplier = 8.0
+shader_parameter/speed = 0.6
+shader_parameter/direction = Vector2(2, 1)
+shader_parameter/rotation = Transform2D(1, -1, 1, 1, 0, 0)
 
 [node name="Application" type="Control" node_paths=PackedStringArray("panel_indicator", "panels_hbox")]
 layout_mode = 3
@@ -12,6 +28,19 @@ grow_vertical = 2
 script = ExtResource("1_wj04o")
 panel_indicator = NodePath("PanelIndicatorContainer/PanelIndicator")
 panels_hbox = NodePath("Panels")
+
+[node name="ColorBackground2" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.81, 0.351, 0, 1)
+
+[node name="Blobs" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_6stev")
+offset_left = -66.0
+offset_top = -60.0
+offset_right = 1698.0
+offset_bottom = 867.0
+color = Color(0, 0, 0, 1)
 
 [node name="Panels" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(0, 200)

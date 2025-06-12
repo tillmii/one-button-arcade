@@ -17,6 +17,7 @@ var game_exe_path: String = ""
 var panel_is_active: bool = false
 var button_is_pressed: bool = false
 var button_pressed_time: float = 0.0
+var game_ongoing: bool = false
 
 
 func initialize_panel(new_title: String, new_description: String, new_image_texture: Texture, new_path: String):
@@ -37,8 +38,9 @@ func _process(delta: float) -> void:
 	update_button_value(button_pressed_time)
 	
 	# Start game condition
-	if panel_is_active and button_pressed_time > _TIME_TO_TRIGGER_GAME_START:
-		print("START GAME ", game_exe_path)
+	if panel_is_active and button_pressed_time > _TIME_TO_TRIGGER_GAME_START and !game_ongoing:
+		start_game()
+		game_ongoing = true
 
 
 func update_button_pressed_time(delta: float):
@@ -67,7 +69,5 @@ func set_active_panel(active_panel: GamePanel):
 
 
 func start_game():
-	OS.execute(game_exe_path, [])
-	
-	#var global_path: String = ProjectSettings.globalize_path("res://games/katzensprung/game.exe")
-	#OS.execute(global_path, [])
+	var global_path: String = ProjectSettings.globalize_path(game_exe_path)
+	OS.execute(global_path, [])
