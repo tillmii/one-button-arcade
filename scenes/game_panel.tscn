@@ -1,91 +1,24 @@
-[gd_scene load_steps=21 format=3 uid="uid://dhnpfh08p4kwj"]
+[gd_scene load_steps=13 format=3 uid="uid://dhnpfh08p4kwj"]
 
 [ext_resource type="Script" uid="uid://chmm6iwtovx6n" path="res://scripts/game_panel.gd" id="1_h4500"]
-[ext_resource type="Shader" uid="uid://cl7rr64irxp0e" path="res://shaders/rgb.gdshader" id="2_n23fl"]
-[ext_resource type="Shader" uid="uid://dbh3pss3puepm" path="res://shaders/bg_pattern.gdshader" id="3_x85hg"]
-[ext_resource type="Texture2D" uid="uid://odot8ktdauev" path="res://assets/portal.jpg" id="6_6mve1"]
-[ext_resource type="Shader" uid="uid://dmm3tycb7cnhl" path="res://shaders/portal.gdshader" id="6_h4500"]
 [ext_resource type="Texture2D" uid="uid://cphk1bw21hxoj" path="res://icon.svg" id="7_4nols"]
-[ext_resource type="Shader" uid="uid://dtpgi2g0014xi" path="res://shaders/outline.gdshader" id="8_rst8r"]
-[ext_resource type="FontFile" uid="uid://vksi3e62ka4a" path="res://fonts/Pinko-j99pl.ttf" id="9_wl8cg"]
-[ext_resource type="FontFile" uid="uid://ddsmrjtea7fy6" path="res://fonts/QuiteMagicalRegular-8VA2.ttf" id="10_pjdp1"]
-[ext_resource type="Texture2D" uid="uid://bk0cgogt71qiy" path="res://assets/button_unpressed.png" id="11_s2vv8"]
-[ext_resource type="Texture2D" uid="uid://cj83iwandscow" path="res://assets/button_pressed.png" id="12_dgefb"]
+[ext_resource type="Script" uid="uid://b42km3ff7c10m" path="res://scripts/test.gd" id="7_n23fl"]
+[ext_resource type="Texture2D" uid="uid://c5k00cr831bhe" path="res://assets/mask.png" id="7_x85hg"]
+[ext_resource type="FontFile" uid="uid://by2l2rkxkf6pd" path="res://fonts/DynaPuff-Bold.ttf" id="8_07x2p"]
+[ext_resource type="Texture2D" uid="uid://qwjuq1alrn88" path="res://assets/button_under.png" id="9_07x2p"]
+[ext_resource type="FontFile" uid="uid://bpgr7j8f20gwi" path="res://fonts/DynaPuff-Regular.ttf" id="9_h4500"]
+[ext_resource type="Texture2D" uid="uid://car4qbrcmr3jq" path="res://assets/flare_01.png" id="9_nv8ta"]
+[ext_resource type="Texture2D" uid="uid://dqi2qbrudyv5e" path="res://assets/button_over.png" id="10_h4500"]
+[ext_resource type="Texture2D" uid="uid://wduq0a368log" path="res://assets/button_progress.png" id="11_n23fl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_07x2p"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_e7520"]
-shader = ExtResource("2_n23fl")
-shader_parameter/brightness = -1.0
-shader_parameter/contrast = 1.0
-shader_parameter/saturation = 1.0
-
-[sub_resource type="Gradient" id="Gradient_07x2p"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_07x2p"]
-gradient = SubResource("Gradient_07x2p")
-fill_to = Vector2(1, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_x85hg"]
-shader = ExtResource("3_x85hg")
-shader_parameter/gradient = SubResource("GradientTexture2D_07x2p")
-shader_parameter/circle_color = Color(0.95, 0.490833, 0, 1)
-shader_parameter/circle_multiplier = 8.0
-shader_parameter/speed = 0.6
-shader_parameter/direction = Vector2(2, 1)
-shader_parameter/rotation = Transform2D(1, -1, 1, 1, 0, 0)
-
-[sub_resource type="Shader" id="Shader_07x2p"]
-code = "shader_type canvas_item;
-
-uniform sampler2D spin_texture: hint_screen_texture;
-uniform bool clockwise = true;
-uniform float speed : hint_range(0.0, 2.0) = 1.0;
-
-vec2 rotate(vec2 uv, vec2 pivot, float angle)
-{
-	mat2 rotation = mat2(vec2(sin(angle), -cos(angle)),
-			vec2(cos(angle), sin(angle)));
-
-    uv -= pivot;
-    uv = uv * rotation;
-    uv += pivot;
-    return uv;
+[sub_resource type="Curve2D" id="Curve2D_nv8ta"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 485, 108, 0, 0, 0, 0, 560, 216, 0, 0, 0, 0, 575, 351, 0, 0, 0, 0, 506, 517, 0, 0, 0, 0, 332, 568, 0, 0, 0, 0, 174, 533, 0, 0, 0, 0, 92, 446, 0, 0, 0, 0, 46, 284, 0, 0, 0, 0, 71, 192, 0, 0, 0, 0, 118, 111, 0, 0, 0, 0, 206, 66, 0, 0, 0, 0, 308, 65, 0, 0, 0, 0, 484, 107)
 }
-
-void fragment()
-{
-	float direction = clockwise ? 1.0 : -1.0;
-	vec2 rotated_uv = rotate(UV, vec2(0.5), TIME * speed * direction);
-	COLOR = vec4(0.0, sin(30.0 * TIME) + 1.5, sin(30.0 * TIME) + 1.5, 1.0) * texture(TEXTURE, rotated_uv);
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sthte"]
-shader = SubResource("Shader_07x2p")
-shader_parameter/clockwise = true
-shader_parameter/speed = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_n23fl"]
-shader = ExtResource("6_h4500")
-shader_parameter/portal_texture = ExtResource("6_6mve1")
-shader_parameter/portal_tint = Color(0, 1, 1, 1)
-shader_parameter/vortex_effect_radius = 0.6
-shader_parameter/twist_strength = 0.0
-shader_parameter/pulsation_speed = 0.0
-shader_parameter/breath_magnitude = -1.86265e-08
-shader_parameter/overall_rotation_speed = -0.5
-shader_parameter/texture_scroll_speed_x = -2.2352e-08
-shader_parameter/texture_scroll_speed_y = -2.2352e-08
-shader_parameter/edge_softness = 0.2
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sb0ua"]
-shader = ExtResource("8_rst8r")
-shader_parameter/color = Color(1, 0, 0, 1)
-shader_parameter/width = 1.0
-shader_parameter/pattern = 2
-shader_parameter/inside = true
-shader_parameter/add_margins = false
+point_count = 13
 
 [node name="GamePanel" type="Panel" node_paths=PackedStringArray("title_label", "description_label", "image_rect", "button_progress_bar")]
 custom_minimum_size = Vector2(1152, 648)
@@ -95,33 +28,8 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_07x2p")
 script = ExtResource("1_h4500")
 title_label = NodePath("LeftRightSplit/RightSide/VerticalBoxRightSide/TitleContainer/Title")
 description_label = NodePath("LeftRightSplit/RightSide/VerticalBoxRightSide/DescriptionContainer/Description")
-image_rect = NodePath("LeftRightSplit/LeftSide/ImageContainer/Image")
+image_rect = NodePath("LeftRightSplit/LeftSide/ImageContainer/Mask/Image")
 button_progress_bar = NodePath("LeftRightSplit/RightSide/VerticalBoxRightSide/ButtonContainer/ButtonProgressBar")
-
-[node name="ColorBackground" type="ColorRect" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_e7520")
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
-color = Color(0, 0, 0, 1)
-
-[node name="ColorBackground2" type="ColorRect" parent="."]
-visible = false
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
-color = Color(0.81, 0.351, 0, 1)
-
-[node name="Blobs" type="ColorRect" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_x85hg")
-layout_mode = 0
-offset_left = -66.0
-offset_top = -60.0
-offset_right = 1698.0
-offset_bottom = 867.0
-color = Color(0, 0, 0, 1)
 
 [node name="LeftRightSplit" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -136,16 +44,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 40
 theme_override_constants/margin_top = 40
-theme_override_constants/margin_right = 40
+theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 60
-
-[node name="BorderAnimImage" type="TextureRect" parent="LeftRightSplit/LeftSide"]
-visible = false
-material = SubResource("ShaderMaterial_sthte")
-layout_mode = 2
-texture = ExtResource("6_6mve1")
-expand_mode = 2
-stretch_mode = 6
 
 [node name="ImageContainer" type="MarginContainer" parent="LeftRightSplit/LeftSide"]
 layout_mode = 2
@@ -154,12 +54,42 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Image" type="TextureRect" parent="LeftRightSplit/LeftSide/ImageContainer"]
-material = SubResource("ShaderMaterial_n23fl")
+[node name="Mask" type="TextureRect" parent="LeftRightSplit/LeftSide/ImageContainer"]
+clip_children = 1
 layout_mode = 2
+texture = ExtResource("7_x85hg")
+expand_mode = 2
+stretch_mode = 6
+
+[node name="Image" type="TextureRect" parent="LeftRightSplit/LeftSide/ImageContainer/Mask"]
+layout_mode = 2
+offset_right = 528.0
+offset_bottom = 528.0
 texture = ExtResource("7_4nols")
 expand_mode = 2
 stretch_mode = 6
+
+[node name="Path2D" type="Path2D" parent="LeftRightSplit/LeftSide/ImageContainer"]
+position = Vector2(-40, -40)
+curve = SubResource("Curve2D_nv8ta")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="LeftRightSplit/LeftSide/ImageContainer/Path2D"]
+position = Vector2(485, 108)
+rotation = 0.963809
+script = ExtResource("7_n23fl")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="LeftRightSplit/LeftSide/ImageContainer/Path2D/PathFollow2D"]
+amount = 2000
+texture = ExtResource("9_nv8ta")
+lifetime = 10.0
+preprocess = 10.0
+lifetime_randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 40.0
+gravity = Vector2(0, 0)
+scale_amount_min = 0.1
+scale_amount_max = 0.3
+color = Color(1, 0.516667, 0, 1)
 
 [node name="RightSide" type="MarginContainer" parent="LeftRightSplit"]
 layout_mode = 2
@@ -183,17 +113,18 @@ theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 40
 
 [node name="Title" type="RichTextLabel" parent="LeftRightSplit/RightSide/VerticalBoxRightSide/TitleContainer"]
-material = SubResource("ShaderMaterial_sb0ua")
 layout_mode = 2
-size_flags_horizontal = 0
 size_flags_vertical = 4
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/normal_font = ExtResource("9_wl8cg")
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/normal_font = ExtResource("8_07x2p")
 theme_override_font_sizes/normal_font_size = 60
 text = "Titel des Spiels"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="DescriptionContainer" type="MarginContainer" parent="LeftRightSplit/RightSide/VerticalBoxRightSide"]
@@ -204,10 +135,14 @@ theme_override_constants/margin_right = 40
 
 [node name="Description" type="RichTextLabel" parent="LeftRightSplit/RightSide/VerticalBoxRightSide/DescriptionContainer"]
 layout_mode = 2
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_fonts/normal_font = ExtResource("10_pjdp1")
-theme_override_font_sizes/normal_font_size = 36
-text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 6
+theme_override_fonts/normal_font = ExtResource("9_h4500")
+theme_override_font_sizes/normal_font_size = 30
+text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum."
+scroll_active = false
+horizontal_alignment = 1
 
 [node name="ButtonContainer" type="MarginContainer" parent="LeftRightSplit/RightSide/VerticalBoxRightSide"]
 layout_mode = 2
@@ -225,5 +160,8 @@ max_value = 2.0
 step = 0.01
 fill_mode = 4
 nine_patch_stretch = true
-texture_under = ExtResource("11_s2vv8")
-texture_progress = ExtResource("12_dgefb")
+texture_under = ExtResource("9_07x2p")
+texture_over = ExtResource("10_h4500")
+texture_progress = ExtResource("11_n23fl")
+tint_under = Color(0.623529, 0, 0, 1)
+tint_progress = Color(0.864007, 0.341499, 0, 1)

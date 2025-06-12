@@ -1,11 +1,8 @@
 # one-button-arcade
 
 TODO:
-	- background animation (gmtk shader) (properly)
-	
-	- particle effect
-	- fonts?
-	- 
+	- force pull damit es auch ja überschrieben wird
+	- doppelklick breaked game, tween abwarten!
 
 Template for "README.md" file:
 # Title

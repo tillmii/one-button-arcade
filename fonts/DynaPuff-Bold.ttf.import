@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://ddsmrjtea7fy6"
-path="res://.godot/imported/QuiteMagicalRegular-8VA2.ttf-a2ec8e926a9285917b6101cad0dab4c5.fontdata"
+uid="uid://by2l2rkxkf6pd"
+path="res://.godot/imported/DynaPuff-Bold.ttf-cf23b488aaf88ecab78193108c4d8a2a.fontdata"
 
 [deps]
 
-source_file="res://fonts/QuiteMagicalRegular-8VA2.ttf"
-dest_files=["res://.godot/imported/QuiteMagicalRegular-8VA2.ttf-a2ec8e926a9285917b6101cad0dab4c5.fontdata"]
+source_file="res://fonts/DynaPuff-Bold.ttf"
+dest_files=["res://.godot/imported/DynaPuff-Bold.ttf-cf23b488aaf88ecab78193108c4d8a2a.fontdata"]
 
 [params]
 

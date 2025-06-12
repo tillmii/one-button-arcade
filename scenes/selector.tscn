@@ -30,12 +30,14 @@ panel_indicator = NodePath("PanelIndicatorContainer/PanelIndicator")
 panels_hbox = NodePath("Panels")
 
 [node name="ColorBackground2" type="ColorRect" parent="."]
+layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0.81, 0.351, 0, 1)
 
 [node name="Blobs" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_6stev")
+layout_mode = 0
 offset_left = -66.0
 offset_top = -60.0
 offset_right = 1698.0

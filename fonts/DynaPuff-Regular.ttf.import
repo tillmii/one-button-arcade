@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://vksi3e62ka4a"
-path="res://.godot/imported/Pinko-j99pl.ttf-9ff0777808f8aace8d4deb0384eb8bbc.fontdata"
+uid="uid://bpgr7j8f20gwi"
+path="res://.godot/imported/DynaPuff-Regular.ttf-76e3c0038195a07fcdf83337d2391b54.fontdata"
 
 [deps]
 
-source_file="res://fonts/Pinko-j99pl.ttf"
-dest_files=["res://.godot/imported/Pinko-j99pl.ttf-9ff0777808f8aace8d4deb0384eb8bbc.fontdata"]
+source_file="res://fonts/DynaPuff-Regular.ttf"
+dest_files=["res://.godot/imported/DynaPuff-Regular.ttf-76e3c0038195a07fcdf83337d2391b54.fontdata"]
 
 [params]
 
