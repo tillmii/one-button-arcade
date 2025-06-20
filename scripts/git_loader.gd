@@ -13,16 +13,15 @@ func pull_git_folders():
 	
 	# create list of directories
 	var output = []
-	var path: String = OS.get_user_data_dir()
-	#print(path)
-	OS.execute("cmd.exe", ["/C", str("cd ", path, " && dir /ad /b")], output, true, true)
+	var user_data_path: String = OS.get_user_data_dir()
+	var cd_and_dir = "cd %s && dir /ad /b" % user_data_path
+	OS.execute("cmd.exe", ["/C", cd_and_dir], output, true, true)
 	var list_of_directories = output[0].split("\r\n")
-	#print(list_of_directories)
 	
 	# create git command
-	var git_command = str("cd ", path, " && git clone ", _REPO_PATH)
+	var git_command = "cd %s && git clone %s" % [user_data_path, _REPO_PATH]
 	if list_of_directories.has("one-button-games"):
-		git_command = "cd one-button-games && git pull %s" % _REPO_PATH
+		git_command = "cd %s/one-button-games && git pull %s" % [user_data_path, _REPO_PATH]
 	
 	# use git command
 	output = []

@@ -35,35 +35,37 @@ func _ready() -> void:
 	for directory in games_folder_dir.get_directories():
 		
 		# create panel for each game
-		var new_panel: GamePanel = _PANEL_TEMPLATE_SCENE.instantiate()
-		new_panel.panel_is_active = false
+		var panel: GamePanel = _PANEL_TEMPLATE_SCENE.instantiate()
+		panel.panel_is_active = false
+		
+		# set all data paths
+		var read_me_path = "%s/%s/README.md" % [_GAMES_FOLDER_PATH, directory]
+		var image_path = "%s/%s/image.jpg" % [_GAMES_FOLDER_PATH, directory]
+		var game_exe_path = "%s/%s/game.exe" % [_GAMES_FOLDER_PATH, directory]
 		
 		# get panel info from "README.md"
-		var new_read_me: String = FileAccess.open(str(_GAMES_FOLDER_PATH, "/", directory, "/", "README.md"), FileAccess.READ).get_as_text()
+		var read_me_text: String = FileAccess.open(read_me_path, FileAccess.READ).get_as_text()
 		var regex = RegEx.new()
 		regex.compile("#\\s*(.*)\\n(.*)")
+		var panel_title: String = regex.search(read_me_text).get_string(1)
+		var panel_description: String = regex.search(read_me_text).get_string(2)
 		
-		# set panel info
-		var new_panel_title: String = regex.search(new_read_me).get_string(1)
-		var new_panel_description: String = regex.search(new_read_me).get_string(2)
-		#var new_panel_image_texture: Texture = load(str(_GAMES_FOLDER_PATH, "/", directory, "/", "image.jpg"))
-		
+		# get image
 		var image = Image.new()
-		var error = image.load(str(_GAMES_FOLDER_PATH, "/", directory, "/", "image.jpg"))
-
-		var new_panel_image_texture
+		var error = image.load(image_path)
+		var panel_image_texture
 		if error == OK:
-			new_panel_image_texture = ImageTexture.create_from_image(image)
+			panel_image_texture = ImageTexture.create_from_image(image)
 		else:
 			print("Failed to load image. Error code: ", error)
-
 		
-		
-		var new_panel_game_exe_path: String = str(_GAMES_FOLDER_PATH, "/", directory, "/", "game.exe")
-		new_panel.initialize_panel(new_panel_title, new_panel_description, new_panel_image_texture, new_panel_game_exe_path)
+		# init panel
+		panel.initialize_panel(panel_title, panel_description, panel_image_texture, game_exe_path)
 		
 		# add panel
-		panels_hbox.add_child(new_panel)
+		panels_hbox.add_child(panel)
+	
+	# set first panel as active
 	panels_hbox.get_child(0).panel_is_active = true
 	
 	# add a copy of panel 0 to allow animation from last game to first game
