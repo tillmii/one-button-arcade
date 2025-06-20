@@ -9,7 +9,7 @@ signal set_active_panel(active_panel: GamePanel)
 signal set_active_dot(active_dot: Dot)
 
 # paths and scenes
-const _GAMES_FOLDER_PATH: String = "res://one-button-games/"
+const _GAMES_FOLDER_PATH: String = "user://one-button-games/"
 const _PANEL_TEMPLATE_SCENE = preload("res://scenes/game_panel.tscn")
 const _DOT_SCENE = preload("res://scenes/dot.tscn")
 
@@ -25,6 +25,8 @@ var _max_panel_idx: int
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	get_tree().set_auto_accept_quit(false)
+	
+	await get_tree().process_frame
 	
 	initialize_panel_indicator()
 	
