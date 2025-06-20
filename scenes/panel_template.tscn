@@ -4,12 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://c5k00cr831bhe" path="res://assets/mask.png" id="1_qdtrv"]
 [ext_resource type="FontFile" uid="uid://by2l2rkxkf6pd" path="res://fonts/DynaPuff-Bold.ttf" id="3_aaybf"]
 [ext_resource type="Texture2D" uid="uid://clegb2jrtu5dr" path="res://assets/outline_circle.png" id="3_cyxqu"]
+[ext_resource type="Texture2D" uid="uid://csn17fxup0opn" path="res://one-button-games/dashgame/image.jpg" id="3_n4th8"]
 [ext_resource type="FontFile" uid="uid://c1vq6bktblwy3" path="res://fonts/Roboto-Medium.ttf" id="4_5vrlg"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qdtrv"]
-load_path = "res://.godot/imported/image.jpg-0f72d930b449d3d44f16e0a1a9a59c24.ctex"
-
-[node name="PanelTemplate" type="Control" node_paths=PackedStringArray("title", "description", "image")]
+[node name="PanelTemplate" type="Control" node_paths=PackedStringArray("title", "description", "image", "progress_bar")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,34 +17,37 @@ grow_vertical = 2
 script = ExtResource("1_5vrlg")
 title = NodePath("HBoxContainer/Right/TextContainer/Title")
 description = NodePath("HBoxContainer/Right/TextContainer/Description")
-image = NodePath("HBoxContainer/Left/Mask/Image")
+image = NodePath("HBoxContainer/Left/ImageMargin/AspectRatioContainer/Mask/Image")
+progress_bar = NodePath("HBoxContainer/Left/CenterContainer/TextureProgressBar")
 
-[node name="HBoxContainer" type="HSplitContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -50.5
-offset_bottom = 50.5
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Left" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/margin_left = 80
-theme_override_constants/margin_top = 140
-theme_override_constants/margin_right = 40
-theme_override_constants/margin_bottom = 140
 
-[node name="Mask" type="TextureRect" parent="HBoxContainer/Left"]
+[node name="ImageMargin" type="MarginContainer" parent="HBoxContainer/Left"]
+layout_mode = 2
+theme_override_constants/margin_left = 58
+theme_override_constants/margin_right = 58
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="HBoxContainer/Left/ImageMargin"]
+layout_mode = 2
+
+[node name="Mask" type="TextureRect" parent="HBoxContainer/Left/ImageMargin/AspectRatioContainer"]
 clip_children = 1
 layout_mode = 2
 texture = ExtResource("1_qdtrv")
 expand_mode = 4
 stretch_mode = 5
 
-[node name="Image" type="TextureRect" parent="HBoxContainer/Left/Mask"]
+[node name="Image" type="TextureRect" parent="HBoxContainer/Left/ImageMargin/AspectRatioContainer/Mask"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -55,17 +56,36 @@ offset_left = -334.735
 offset_right = 334.735
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("CompressedTexture2D_qdtrv")
-expand_mode = 3
+texture = ExtResource("3_n4th8")
+expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="HBoxContainer/Left"]
+[node name="CenterContainer" type="Control" parent="HBoxContainer/Left"]
+clip_contents = true
 layout_mode = 2
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="HBoxContainer/Left/CenterContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -450.5
+offset_top = -450.0
+offset_right = 450.5
+offset_bottom = 450.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+step = 0.1
 fill_mode = 4
+radial_initial_angle = 180.0
 texture_under = ExtResource("3_cyxqu")
 texture_progress = ExtResource("3_cyxqu")
+tint_under = Color(1, 1, 1, 0)
+tint_over = Color(1, 1, 1, 0)
 
 [node name="Right" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2

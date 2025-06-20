@@ -43,7 +43,7 @@ const _PANEL_TEMPLATE = preload("res://scenes/panel_template.tscn")
 const _PIVOT_OFFSET = Vector2(960.0, 2200.0)
 
 # Timer stuff
-var filling_up: float = 0.0
+#
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
@@ -85,7 +85,6 @@ func _ready() -> void:
 		return
 	current_panel_template.fill_in_data(_games[0])
 	next_panel_template.fill_in_data(_games[1])
-	game_idx = posmod((game_idx + 2), _games.size())
 	
 	# Timer signals
 	short_press_timer.connect("timeout", short_press_timer_timeout)
@@ -93,13 +92,14 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	pass
-	# fill radial button progress based on filling_up value
+	if long_press_timer.time_left > 0 and not long_press_timer.is_stopped():
+		current_panel_template.progress_bar.value = remap(long_press_timer.wait_time - long_press_timer.time_left, 0.0, long_press_timer.wait_time, 0.0, 100.0)
 
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("left_click"):
-		short_press_timer.start()
+		if not current_tween:
+			short_press_timer.start()
 	if event.is_action_released("left_click"):
 		if short_press_timer.time_left > 0.0:
 			short_press_input()
@@ -110,21 +110,26 @@ func _input(event: InputEvent) -> void:
 
 
 func short_press_input():
+	short_press_timer.stop()
 	spin_wheel()
 	tween_colors()
 
 
 func short_press_timer_timeout():
 	long_press_timer.start()
-	filling_up = 1.0
 
 
 func long_press_abort():
-	filling_up = -1.0
+	long_press_timer.stop()
+	var tween = create_tween()
+	tween.tween_property(current_panel_template.progress_bar, "value", 0, .2)
 
 
 func long_press_timer_timeout():
-	pass#OS.execute(ProjectSettings.globalize_path(_games[game_idx].path_to_exe), [])
+	long_press_timer.stop()
+	current_panel_template.progress_bar.value = 0.0
+	await get_tree().process_frame
+	OS.execute(ProjectSettings.globalize_path(_games[posmod(game_idx, _games.size())].path_to_exe), [])
 
 
 func spin_wheel():
@@ -137,15 +142,15 @@ func tween_colors():
 	
 	# Change background color
 	var tween_bg = create_tween()
-	tween_bg.tween_property(background, "color", colors[color_idx], _ANIMATION_TIME).set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_IN_OUT)
+	tween_bg.tween_property(background, "color", _games[posmod(game_idx + 1, _games.size())].color, _ANIMATION_TIME).set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_IN_OUT)
 	
 	# Change horizon color
 	var tween_horizon = create_tween()
-	tween_horizon.tween_property(gradient, "texture:gradient:colors", PackedColorArray([colors[color_idx], Color("#000000")]), _ANIMATION_TIME).set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_IN_OUT)
+	tween_horizon.tween_property(gradient, "texture:gradient:colors", PackedColorArray([_games[posmod(game_idx + 1, _games.size())].color, Color("#000000")]), _ANIMATION_TIME).set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_IN_OUT)
 	
 	# Change dot color
 	var tween_dots = create_tween()
-	tween_dots.tween_property(dots, "material:shader_parameter/circle_color", colors[color_idx].darkened(-.5), _ANIMATION_TIME).set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_IN_OUT)
+	tween_dots.tween_property(dots, "material:shader_parameter/circle_color", _games[posmod(game_idx + 1, _games.size())].color.darkened(-.5), _ANIMATION_TIME).set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_IN_OUT)
 	
 	color_idx = (color_idx + 1) % (colors.size())
 
@@ -166,5 +171,5 @@ func swap_game_container():
 	next_panel_template.rotation_degrees -= 180.0
 	
 	# Set next game data
-	next_panel_template.fill_in_data(_games[game_idx])
+	next_panel_template.fill_in_data(_games[posmod(game_idx + 2, _games.size())])
 	game_idx = posmod((game_idx + 1), _games.size())
