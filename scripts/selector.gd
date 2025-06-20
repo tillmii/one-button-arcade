@@ -9,12 +9,12 @@ class GameData:
 	var color: Color
 	var path_to_exe: String
 	
-	func _init(title, description, image_texture, color, path_to_exe):
-		self.title = title
-		self.description = description
-		self.image_texture = image_texture
-		self.color = color
-		self.path_to_exe = path_to_exe
+	func _init(_title, _description, _image_texture, _color, _path_to_exe):
+		self.title = _title
+		self.description = _description
+		self.image_texture = _image_texture
+		self.color = _color
+		self.path_to_exe = _path_to_exe
 
 
 # Game Data
@@ -28,6 +28,8 @@ class GameData:
 @export var dots: ColorRect
 @export var current_panel_template: PanelTemplate
 @export var next_panel_template: PanelTemplate
+@export var short_press_timer: Timer
+@export var long_press_timer: Timer
 
 # Tweening stuff
 var current_tween: Tween
@@ -40,6 +42,8 @@ const _GAMES_FOLDER_PATH: String = "user://one-button-games/"
 const _PANEL_TEMPLATE = preload("res://scenes/panel_template.tscn")
 const _PIVOT_OFFSET = Vector2(960.0, 2200.0)
 
+# Timer stuff
+var filling_up: float = 0.0
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
@@ -82,19 +86,45 @@ func _ready() -> void:
 	current_panel_template.fill_in_data(_games[0])
 	next_panel_template.fill_in_data(_games[1])
 	game_idx = posmod((game_idx + 2), _games.size())
+	
+	# Timer signals
+	short_press_timer.connect("timeout", short_press_timer_timeout)
+	long_press_timer.connect("timeout", long_press_timer_timeout)
+
+
+func _process(delta: float) -> void:
+	pass
+	# fill radial button progress based on filling_up value
 
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("left_click"):
-		if not current_tween:
-			_on_click()
+		short_press_timer.start()
+	if event.is_action_released("left_click"):
+		if short_press_timer.time_left > 0.0:
+			short_press_input()
+		if long_press_timer.time_left > 0.0:
+			long_press_abort()
 	if event.is_action_pressed("close_application"):
 		get_tree().quit()
 
 
-func _on_click():
+func short_press_input():
 	spin_wheel()
 	tween_colors()
+
+
+func short_press_timer_timeout():
+	long_press_timer.start()
+	filling_up = 1.0
+
+
+func long_press_abort():
+	filling_up = -1.0
+
+
+func long_press_timer_timeout():
+	pass#OS.execute(ProjectSettings.globalize_path(_games[game_idx].path_to_exe), [])
 
 
 func spin_wheel():

@@ -37,7 +37,7 @@ shader_parameter/speed = 1.0
 shader_parameter/direction = Vector2(1, 1)
 shader_parameter/rotation = Transform2D(1, -1, 1, 1, 0, 0)
 
-[node name="Playground" type="Control" node_paths=PackedStringArray("game_container", "gradient", "background", "dots", "current_panel_template", "next_panel_template")]
+[node name="Selector" type="Control" node_paths=PackedStringArray("game_container", "gradient", "background", "dots", "current_panel_template", "next_panel_template", "short_press_timer", "long_press_timer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -51,6 +51,8 @@ background = NodePath("Circle/Background")
 dots = NodePath("Circle/Background/Dots")
 current_panel_template = NodePath("GameContainer/CurrentPanelTemplate")
 next_panel_template = NodePath("GameContainer/NextPanelTemplate")
+short_press_timer = NodePath("ShortPressTimer")
+long_press_timer = NodePath("LongPressTimer")
 
 [node name="Gradient" type="TextureRect" parent="."]
 layout_mode = 1
@@ -133,3 +135,11 @@ offset_bottom = -1120.0
 grow_horizontal = 1
 rotation = -1.5708
 pivot_offset = Vector2(960, 2200)
+
+[node name="ShortPressTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="LongPressTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true

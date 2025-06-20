@@ -10,7 +10,7 @@ func _ready():
 
 
 func pull_git_folders():
-	
+	return
 	# create list of directories
 	var output = []
 	var user_data_path: String = OS.get_user_data_dir()
