@@ -1,24 +1,16 @@
-[gd_scene load_steps=13 format=3 uid="uid://dhnpfh08p4kwj"]
+[gd_scene load_steps=10 format=3 uid="uid://dhnpfh08p4kwj"]
 
 [ext_resource type="Script" uid="uid://chmm6iwtovx6n" path="res://scripts/game_panel.gd" id="1_h4500"]
 [ext_resource type="Texture2D" uid="uid://cphk1bw21hxoj" path="res://icon.svg" id="7_4nols"]
-[ext_resource type="Script" uid="uid://b42km3ff7c10m" path="res://scripts/test.gd" id="7_n23fl"]
 [ext_resource type="Texture2D" uid="uid://c5k00cr831bhe" path="res://assets/mask.png" id="7_x85hg"]
 [ext_resource type="FontFile" uid="uid://by2l2rkxkf6pd" path="res://fonts/DynaPuff-Bold.ttf" id="8_07x2p"]
 [ext_resource type="Texture2D" uid="uid://qwjuq1alrn88" path="res://assets/button_under.png" id="9_07x2p"]
 [ext_resource type="FontFile" uid="uid://bpgr7j8f20gwi" path="res://fonts/DynaPuff-Regular.ttf" id="9_h4500"]
-[ext_resource type="Texture2D" uid="uid://car4qbrcmr3jq" path="res://assets/flare_01.png" id="9_nv8ta"]
 [ext_resource type="Texture2D" uid="uid://dqi2qbrudyv5e" path="res://assets/button_over.png" id="10_h4500"]
 [ext_resource type="Texture2D" uid="uid://wduq0a368log" path="res://assets/button_progress.png" id="11_n23fl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_07x2p"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
-
-[sub_resource type="Curve2D" id="Curve2D_nv8ta"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 485, 108, 0, 0, 0, 0, 560, 216, 0, 0, 0, 0, 575, 351, 0, 0, 0, 0, 506, 517, 0, 0, 0, 0, 332, 568, 0, 0, 0, 0, 174, 533, 0, 0, 0, 0, 92, 446, 0, 0, 0, 0, 46, 284, 0, 0, 0, 0, 71, 192, 0, 0, 0, 0, 118, 111, 0, 0, 0, 0, 206, 66, 0, 0, 0, 0, 308, 65, 0, 0, 0, 0, 484, 107)
-}
-point_count = 13
 
 [node name="GamePanel" type="Panel" node_paths=PackedStringArray("title_label", "description_label", "image_rect", "button_progress_bar")]
 custom_minimum_size = Vector2(1152, 648)
@@ -68,28 +60,6 @@ offset_bottom = 528.0
 texture = ExtResource("7_4nols")
 expand_mode = 2
 stretch_mode = 6
-
-[node name="Path2D" type="Path2D" parent="LeftRightSplit/LeftSide/ImageContainer"]
-position = Vector2(-40, -40)
-curve = SubResource("Curve2D_nv8ta")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="LeftRightSplit/LeftSide/ImageContainer/Path2D"]
-position = Vector2(485, 108)
-rotation = 0.963809
-script = ExtResource("7_n23fl")
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="LeftRightSplit/LeftSide/ImageContainer/Path2D/PathFollow2D"]
-amount = 2000
-texture = ExtResource("9_nv8ta")
-lifetime = 10.0
-preprocess = 10.0
-lifetime_randomness = 1.0
-emission_shape = 1
-emission_sphere_radius = 40.0
-gravity = Vector2(0, 0)
-scale_amount_min = 0.1
-scale_amount_max = 0.3
-color = Color(1, 0.516667, 0, 1)
 
 [node name="RightSide" type="MarginContainer" parent="LeftRightSplit"]
 layout_mode = 2
