@@ -1,0 +1,153 @@
+[gd_scene load_steps=11 format=3 uid="uid://dspmix48x1qao"]
+
+[ext_resource type="Script" uid="uid://i2obwqm2pb82" path="res://scripts/playground.gd" id="1_q8s1k"]
+[ext_resource type="Texture2D" uid="uid://cfda5rix3qyjc" path="res://assets/big_circle.png" id="1_qchbg"]
+[ext_resource type="Shader" uid="uid://dbh3pss3puepm" path="res://shaders/bg_pattern.gdshader" id="2_kddj0"]
+[ext_resource type="PackedScene" uid="uid://cma864sy7yokf" path="res://scenes/panel_template.tscn" id="3_kddj0"]
+[ext_resource type="Texture2D" uid="uid://c6rv3om85jrv2" path="res://assets/empty_circle.png" id="5_o6wi6"]
+
+[sub_resource type="Gradient" id="Gradient_o6wi6"]
+colors = PackedColorArray(2.40654e-08, 0.327967, 0.329375, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_emj6c"]
+gradient = SubResource("Gradient_o6wi6")
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 0.4)
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_mm0a5"]
+offsets = PackedFloat32Array(0, 0.444444, 0.555556, 1)
+colors = PackedColorArray(0.564706, 0.564706, 0.564706, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.564706, 0.564706, 0.564706, 1)
+metadata/_snap_enabled = true
+metadata/_snap_count = 9
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o6wi6"]
+gradient = SubResource("Gradient_mm0a5")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aaybf"]
+shader = ExtResource("2_kddj0")
+shader_parameter/gradient = SubResource("GradientTexture2D_o6wi6")
+shader_parameter/circle_color = Color(0.647059, 1, 1, 1)
+shader_parameter/circle_multiplier = 20.0
+shader_parameter/speed = 1.0
+shader_parameter/direction = Vector2(1, 1)
+shader_parameter/rotation = Transform2D(1, -1, 1, 1, 0, 0)
+
+[node name="Playground" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q8s1k")
+
+[node name="Gradient" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -150.0
+offset_bottom = -150.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_emj6c")
+
+[node name="Circle" type="TextureRect" parent="."]
+clip_children = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -2200.0
+offset_right = 2200.0
+offset_bottom = 4450.0
+grow_horizontal = 2
+pivot_offset = Vector2(2200, 2200)
+texture = ExtResource("1_qchbg")
+stretch_mode = 5
+
+[node name="Background" type="ColorRect" parent="Circle"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.801284, 0.754916, 1)
+
+[node name="Dots" type="ColorRect" parent="Circle/Background"]
+material = SubResource("ShaderMaterial_aaybf")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -2200.0
+offset_top = 50.0
+offset_right = 2200.0
+offset_bottom = 4450.0
+grow_horizontal = 2
+pivot_offset = Vector2(2200, 2200)
+texture = ExtResource("5_o6wi6")
+
+[node name="PanelTemplate" parent="TextureRect" instance=ExtResource("3_kddj0")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -960.0
+offset_right = 960.0
+offset_bottom = 1080.0
+grow_vertical = 1
+pivot_offset = Vector2(960, 2200)
+
+[node name="PanelTemplate2" parent="TextureRect" instance=ExtResource("3_kddj0")]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_right = 0.0
+anchor_bottom = 0.5
+offset_top = 960.0
+offset_right = 1920.0
+offset_bottom = 2040.0
+grow_horizontal = 1
+rotation = -1.5708
+
+[node name="PanelTemplate3" parent="TextureRect" instance=ExtResource("3_kddj0")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -960.0
+offset_right = 960.0
+offset_bottom = 1080.0
+grow_vertical = 1
+rotation = -3.14159
+pivot_offset = Vector2(960, 2200)
+
+[node name="PanelTemplate4" parent="TextureRect" instance=ExtResource("3_kddj0")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -960.0
+offset_right = 960.0
+offset_bottom = 1080.0
+grow_vertical = 1
+rotation = -4.71239
+pivot_offset = Vector2(960, 2200)

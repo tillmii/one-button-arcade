@@ -9,7 +9,7 @@ uniform mat2 rotation = mat2(vec2(1.0,1.0), vec2(-1.0,1.0));
 
 void fragment() {
 	vec2 direction_norm = normalize(direction);
-	vec2 uv = SCREEN_UV;
+	vec2 uv = UV;
 	vec2 uv_deriv = fwidthFine(uv);
 	float aspect_ratio = uv_deriv.y / uv_deriv.x;
 	uv.x *= aspect_ratio;

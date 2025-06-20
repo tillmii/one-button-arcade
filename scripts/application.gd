@@ -23,10 +23,9 @@ var _max_panel_idx: int
 
 
 func _ready() -> void:
-	# update games folder (download missing games from git)
-		# test data for now
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	get_tree().set_auto_accept_quit(false)
 	
-	# inits
 	initialize_panel_indicator()
 	
 	# read all games

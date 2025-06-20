@@ -1,0 +1,84 @@
+[gd_scene load_steps=5 format=3 uid="uid://cma864sy7yokf"]
+
+[ext_resource type="Texture2D" uid="uid://c5k00cr831bhe" path="res://assets/mask.png" id="1_qdtrv"]
+[ext_resource type="Texture2D" uid="uid://wcyux2biyxy8" path="res://one-button-games/katzensprung/image.jpg" id="2_5vrlg"]
+[ext_resource type="FontFile" uid="uid://by2l2rkxkf6pd" path="res://fonts/DynaPuff-Bold.ttf" id="3_aaybf"]
+[ext_resource type="FontFile" uid="uid://c1vq6bktblwy3" path="res://fonts/Roboto-Medium.ttf" id="4_5vrlg"]
+
+[node name="PanelTemplate" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Left" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 140
+theme_override_constants/margin_bottom = 140
+
+[node name="Mask" type="TextureRect" parent="HBoxContainer/Left"]
+clip_children = 1
+layout_mode = 2
+texture = ExtResource("1_qdtrv")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Image" type="TextureRect" parent="HBoxContainer/Left/Mask"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_5vrlg")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Right" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 140
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 140
+
+[node name="TextContainer" type="VBoxContainer" parent="HBoxContainer/Right"]
+layout_mode = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="Title" type="RichTextLabel" parent="HBoxContainer/Right/TextContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/normal_font = ExtResource("3_aaybf")
+theme_override_font_sizes/normal_font_size = 80
+bbcode_enabled = true
+text = "[wave amp=50.0 freq=5.0 connected=1]Game Title[/wave]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+
+[node name="Description" type="RichTextLabel" parent="HBoxContainer/Right/TextContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 8
+theme_override_fonts/normal_font = ExtResource("4_5vrlg")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
