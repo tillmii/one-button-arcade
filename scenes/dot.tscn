@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://b2la0q4a0d742"]
-
-[ext_resource type="Texture2D" uid="uid://bwglthf46qtyt" path="res://assets/dot.png" id="1_1c7to"]
-[ext_resource type="Script" uid="uid://dv7geechgpjj3" path="res://scripts/dot.gd" id="2_1c7to"]
-
-[node name="Dot" type="TextureRect"]
-texture = ExtResource("1_1c7to")
-expand_mode = 2
-script = ExtResource("2_1c7to")

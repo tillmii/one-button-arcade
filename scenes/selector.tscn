@@ -1,71 +1,135 @@
-[gd_scene load_steps=6 format=3 uid="uid://brpdh2dqytd2"]
+[gd_scene load_steps=11 format=3 uid="uid://dspmix48x1qao"]
 
-[ext_resource type="Script" uid="uid://bgp0eqodx1h0v" path="res://scripts/application.gd" id="1_wj04o"]
+[ext_resource type="Script" uid="uid://i2obwqm2pb82" path="res://scripts/selector.gd" id="1_esnui"]
 [ext_resource type="Shader" uid="uid://dbh3pss3puepm" path="res://shaders/bg_pattern.gdshader" id="2_7ji5i"]
+[ext_resource type="Texture2D" uid="uid://cfda5rix3qyjc" path="res://assets/big_circle.png" id="2_buvdd"]
+[ext_resource type="Texture2D" uid="uid://c6rv3om85jrv2" path="res://assets/empty_circle.png" id="4_puhoh"]
+[ext_resource type="PackedScene" uid="uid://cma864sy7yokf" path="res://scenes/panel_template.tscn" id="5_i8cl7"]
 
-[sub_resource type="Gradient" id="Gradient_wj04o"]
+[sub_resource type="Gradient" id="Gradient_o6wi6"]
+colors = PackedColorArray(2.40654e-08, 0.327967, 0.329375, 1, 0, 0, 0, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_h4500"]
-gradient = SubResource("Gradient_wj04o")
-fill_to = Vector2(1, 1)
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_emj6c"]
+gradient = SubResource("Gradient_o6wi6")
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 0.4)
+metadata/_snap_enabled = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6stev"]
+[sub_resource type="Gradient" id="Gradient_mm0a5"]
+offsets = PackedFloat32Array(0, 0.444444, 0.555556, 1)
+colors = PackedColorArray(0.564706, 0.564706, 0.564706, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.564706, 0.564706, 0.564706, 1)
+metadata/_snap_enabled = true
+metadata/_snap_count = 9
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o6wi6"]
+gradient = SubResource("Gradient_mm0a5")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aaybf"]
 shader = ExtResource("2_7ji5i")
-shader_parameter/gradient = SubResource("GradientTexture2D_h4500")
-shader_parameter/circle_color = Color(0.95, 0.490833, 0, 1)
-shader_parameter/circle_multiplier = 8.0
-shader_parameter/speed = 0.6
-shader_parameter/direction = Vector2(2, 1)
+shader_parameter/gradient = SubResource("GradientTexture2D_o6wi6")
+shader_parameter/circle_color = Color(0.647059, 1, 1, 1)
+shader_parameter/circle_multiplier = 20.0
+shader_parameter/speed = 1.0
+shader_parameter/direction = Vector2(1, 1)
 shader_parameter/rotation = Transform2D(1, -1, 1, 1, 0, 0)
 
-[node name="Application" type="Control" node_paths=PackedStringArray("panel_indicator", "panels_hbox")]
+[node name="Playground" type="Control" node_paths=PackedStringArray("game_container", "gradient", "background", "dots", "current_panel_template", "next_panel_template")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_wj04o")
-panel_indicator = NodePath("PanelIndicatorContainer/PanelIndicator")
-panels_hbox = NodePath("Panels")
+script = ExtResource("1_esnui")
+game_container = NodePath("GameContainer")
+gradient = NodePath("Gradient")
+background = NodePath("Circle/Background")
+dots = NodePath("Circle/Background/Dots")
+current_panel_template = NodePath("GameContainer/CurrentPanelTemplate")
+next_panel_template = NodePath("GameContainer/NextPanelTemplate")
 
-[node name="ColorBackground2" type="ColorRect" parent="."]
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
-color = Color(0.81, 0.351, 0, 1)
-
-[node name="Blobs" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_6stev")
-layout_mode = 0
-offset_left = -66.0
-offset_top = -60.0
-offset_right = 1698.0
-offset_bottom = 867.0
-color = Color(0, 0, 0, 1)
-
-[node name="Panels" type="HBoxContainer" parent="."]
-custom_minimum_size = Vector2(0, 200)
+[node name="Gradient" type="TextureRect" parent="."]
 layout_mode = 1
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_constants/separation = 0
-
-[node name="PanelIndicatorContainer" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -40.0
-offset_right = 20.0
+offset_top = -150.0
+offset_bottom = -150.0
 grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/margin_bottom = 15
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_emj6c")
 
-[node name="PanelIndicator" type="HBoxContainer" parent="PanelIndicatorContainer"]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 2
-alignment = 1
+[node name="Circle" type="TextureRect" parent="."]
+clip_children = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -2200.0
+offset_right = 2200.0
+offset_bottom = 4450.0
+grow_horizontal = 2
+pivot_offset = Vector2(2200, 2200)
+texture = ExtResource("2_buvdd")
+stretch_mode = 5
+
+[node name="Background" type="ColorRect" parent="Circle"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.801284, 0.754916, 1)
+
+[node name="Dots" type="ColorRect" parent="Circle/Background"]
+material = SubResource("ShaderMaterial_aaybf")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameContainer" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -2200.0
+offset_top = 50.0
+offset_right = 2200.0
+offset_bottom = 4450.0
+grow_horizontal = 2
+pivot_offset = Vector2(2200, 2200)
+texture = ExtResource("4_puhoh")
+
+[node name="CurrentPanelTemplate" parent="GameContainer" instance=ExtResource("5_i8cl7")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -960.0
+offset_right = 960.0
+offset_bottom = 1080.0
+grow_vertical = 1
+pivot_offset = Vector2(960, 2200)
+
+[node name="NextPanelTemplate" parent="GameContainer" instance=ExtResource("5_i8cl7")]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_right = 0.0
+anchor_bottom = 0.5
+offset_left = 1240.0
+offset_top = -2200.0
+offset_right = 3160.0
+offset_bottom = -1120.0
+grow_horizontal = 1
+rotation = -1.5708
+pivot_offset = Vector2(960, 2200)
