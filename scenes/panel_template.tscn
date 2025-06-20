@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://cma864sy7yokf"]
+[gd_scene load_steps=6 format=3 uid="uid://cma864sy7yokf"]
 
+[ext_resource type="Script" uid="uid://br76twup7o22y" path="res://scripts/panel_template.gd" id="1_5vrlg"]
 [ext_resource type="Texture2D" uid="uid://c5k00cr831bhe" path="res://assets/mask.png" id="1_qdtrv"]
 [ext_resource type="FontFile" uid="uid://by2l2rkxkf6pd" path="res://fonts/DynaPuff-Bold.ttf" id="3_aaybf"]
 [ext_resource type="FontFile" uid="uid://c1vq6bktblwy3" path="res://fonts/Roboto-Medium.ttf" id="4_5vrlg"]
@@ -7,13 +8,17 @@
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qdtrv"]
 load_path = "res://.godot/imported/image.jpg-0f72d930b449d3d44f16e0a1a9a59c24.ctex"
 
-[node name="PanelTemplate" type="Control"]
+[node name="PanelTemplate" type="Control" node_paths=PackedStringArray("title", "description", "image")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_5vrlg")
+title = NodePath("HBoxContainer/Right/TextContainer/Title")
+description = NodePath("HBoxContainer/Right/TextContainer/Description")
+image = NodePath("HBoxContainer/Left/Mask/Image")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1

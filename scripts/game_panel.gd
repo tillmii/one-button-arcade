@@ -1,4 +1,4 @@
-class_name GamePanel
+class_name w
 extends Panel
 
 
@@ -10,7 +10,7 @@ const _TIME_TO_TRIGGER_GAME_START: float = 2.0
 @export var description_label: RichTextLabel
 @export var image_rect: TextureRect
 @export var button_progress_bar: TextureProgressBar
-@onready var application: Application = self.get_parent().get_parent()
+@onready var application = self.get_parent().get_parent()
 
 # variables
 var game_exe_path: String = ""
