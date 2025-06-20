@@ -1,9 +1,11 @@
 [gd_scene load_steps=5 format=3 uid="uid://cma864sy7yokf"]
 
 [ext_resource type="Texture2D" uid="uid://c5k00cr831bhe" path="res://assets/mask.png" id="1_qdtrv"]
-[ext_resource type="Texture2D" uid="uid://wcyux2biyxy8" path="res://one-button-games/katzensprung/image.jpg" id="2_5vrlg"]
 [ext_resource type="FontFile" uid="uid://by2l2rkxkf6pd" path="res://fonts/DynaPuff-Bold.ttf" id="3_aaybf"]
 [ext_resource type="FontFile" uid="uid://c1vq6bktblwy3" path="res://fonts/Roboto-Medium.ttf" id="4_5vrlg"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qdtrv"]
+load_path = "res://.godot/imported/image.jpg-0f72d930b449d3d44f16e0a1a9a59c24.ctex"
 
 [node name="PanelTemplate" type="Control"]
 layout_mode = 3
@@ -42,7 +44,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_5vrlg")
+texture = SubResource("CompressedTexture2D_qdtrv")
 expand_mode = 3
 stretch_mode = 5
 

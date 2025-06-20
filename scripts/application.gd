@@ -44,7 +44,19 @@ func _ready() -> void:
 		# set panel info
 		var new_panel_title: String = regex.search(new_read_me).get_string(1)
 		var new_panel_description: String = regex.search(new_read_me).get_string(2)
-		var new_panel_image_texture: Texture = load(str(_GAMES_FOLDER_PATH, "/", directory, "/", "image.jpg"))
+		#var new_panel_image_texture: Texture = load(str(_GAMES_FOLDER_PATH, "/", directory, "/", "image.jpg"))
+		
+		var image = Image.new()
+		var error = image.load(str(_GAMES_FOLDER_PATH, "/", directory, "/", "image.jpg"))
+
+		var new_panel_image_texture
+		if error == OK:
+			new_panel_image_texture = ImageTexture.create_from_image(image)
+		else:
+			print("Failed to load image. Error code: ", error)
+
+		
+		
 		var new_panel_game_exe_path: String = str(_GAMES_FOLDER_PATH, "/", directory, "/", "game.exe")
 		new_panel.initialize_panel(new_panel_title, new_panel_description, new_panel_image_texture, new_panel_game_exe_path)
 		
@@ -75,6 +87,8 @@ func _input(event: InputEvent) -> void:
 			button_pressed.emit()
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_released():
 			button_released.emit()
+	if event.is_action_pressed("close_application"):
+		get_tree().quit()
 
 
 func next_panel():
