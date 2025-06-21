@@ -42,8 +42,6 @@ const _GAMES_FOLDER_PATH: String = "user://one-button-games/"
 const _PANEL_TEMPLATE = preload("res://scenes/panel_template.tscn")
 const _PIVOT_OFFSET = Vector2(960.0, 2200.0)
 
-# Timer stuff
-#
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
