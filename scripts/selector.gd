@@ -88,6 +88,11 @@ func _ready() -> void:
 	current_panel_template.fill_in_data(_games[0])
 	next_panel_template.fill_in_data(_games[1])
 	
+	# Initialize colors
+	background.color = _games[0].color
+	gradient.texture.gradient.colors = PackedColorArray([_games[0].color, Color("#000000")])
+	dots.material.set("shader_parameter/circle_color", _games[0].color.darkened(-.5))
+	
 	# Timer signals
 	short_press_timer.connect("timeout", short_press_timer_timeout)
 	long_press_timer.connect("timeout", long_press_timer_timeout)
