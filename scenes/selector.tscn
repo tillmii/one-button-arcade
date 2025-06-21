@@ -137,7 +137,7 @@ rotation = -1.5708
 pivot_offset = Vector2(960, 2200)
 
 [node name="ShortPressTimer" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.4
 one_shot = true
 
 [node name="LongPressTimer" type="Timer" parent="."]
