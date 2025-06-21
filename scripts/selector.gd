@@ -8,13 +8,15 @@ class GameData:
 	var image_texture: Texture
 	var color: Color
 	var path_to_exe: String
+	var creators: String
 	
-	func _init(_title, _description, _image_texture, _color, _path_to_exe):
+	func _init(_title, _description, _image_texture, _color, _path_to_exe, _creators):
 		self.title = _title
 		self.description = _description
 		self.image_texture = _image_texture
 		self.color = _color
 		self.path_to_exe = _path_to_exe
+		self.creators = _creators
 
 
 # Game Data
@@ -33,8 +35,6 @@ class GameData:
 
 # Tweening stuff
 var current_tween: Tween
-var colors = [Color("#7E52A0"), Color("#00ccc1"), Color("#cf5a00")]
-var color_idx = 0
 var _ANIMATION_TIME = 1.0
 
 # Paths and Scenes
@@ -62,10 +62,11 @@ func _ready() -> void:
 		
 		# Get panel info from "README.md"
 		var read_me_text: String = FileAccess.open(read_me_path, FileAccess.READ).get_as_text()
-		var regex = RegEx.new()
-		regex.compile("#\\s*(.*)\\n(.*)")
-		var game_title: String = regex.search(read_me_text).get_string(1)
-		var game_description: String = regex.search(read_me_text).get_string(2)
+		var read_me_parts = read_me_text.split("\r\n")
+		var game_title: String = read_me_parts[0]
+		var game_color_code: Color = Color(read_me_parts[1])
+		var game_creators: String = read_me_parts[2]
+		var game_description: String = read_me_parts[3]
 		
 		# Get image
 		var image = Image.new()
@@ -76,8 +77,11 @@ func _ready() -> void:
 		else:
 			print("Failed to load image. Error code: ", error)
 		
+		# Get color
+		var game_color: Color = Color(game_color_code)
+		
 		# Create game data object and add it to the list
-		var game: GameData = GameData.new(game_title, game_description, panel_image_texture, colors.pick_random(), game_exe_path)
+		var game: GameData = GameData.new(game_title, game_description, panel_image_texture, game_color, game_exe_path, game_creators)
 		_games.append(game)
 	
 	# Set first two containers
@@ -91,7 +95,7 @@ func _ready() -> void:
 	long_press_timer.connect("timeout", long_press_timer_timeout)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if long_press_timer.time_left > 0 and not long_press_timer.is_stopped():
 		current_panel_template.progress_bar.value = remap(long_press_timer.wait_time - long_press_timer.time_left, 0.0, long_press_timer.wait_time, 0.0, 100.0)
 
@@ -151,8 +155,6 @@ func tween_colors():
 	# Change dot color
 	var tween_dots = create_tween()
 	tween_dots.tween_property(dots, "material:shader_parameter/circle_color", _games[posmod(game_idx + 1, _games.size())].color.darkened(-.5), _ANIMATION_TIME).set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_IN_OUT)
-	
-	color_idx = (color_idx + 1) % (colors.size())
 
 
 func finished_spinning():

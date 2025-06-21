@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://csn17fxup0opn" path="res://one-button-games/dashgame/image.jpg" id="3_n4th8"]
 [ext_resource type="FontFile" uid="uid://c1vq6bktblwy3" path="res://fonts/Roboto-Medium.ttf" id="4_5vrlg"]
 
-[node name="PanelTemplate" type="Control" node_paths=PackedStringArray("title", "description", "image", "progress_bar")]
+[node name="PanelTemplate" type="Control" node_paths=PackedStringArray("title", "description", "image", "progress_bar", "creators")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,6 +19,7 @@ title = NodePath("HBoxContainer/Right/TextContainer/Title")
 description = NodePath("HBoxContainer/Right/TextContainer/Description")
 image = NodePath("HBoxContainer/Left/ImageMargin/AspectRatioContainer/Mask/Image")
 progress_bar = NodePath("HBoxContainer/Left/CenterContainer/TextureProgressBar")
+creators = NodePath("CreatorBox/Creators")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -123,3 +124,31 @@ text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
 fit_content = true
 scroll_active = false
 horizontal_alignment = 1
+
+[node name="CreatorBox" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -78.0
+offset_top = -48.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 60
+
+[node name="Creators" type="RichTextLabel" parent="CreatorBox"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 8
+theme_override_fonts/normal_font = ExtResource("4_5vrlg")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "Creators: "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 2
+vertical_alignment = 2

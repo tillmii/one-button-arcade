@@ -6,6 +6,7 @@ extends Control
 @export var description: RichTextLabel
 @export var image: TextureRect
 @export var progress_bar: TextureProgressBar
+@export var creators: RichTextLabel
 
 
 func fill_in_data(game_data: Selector.GameData):
@@ -13,3 +14,4 @@ func fill_in_data(game_data: Selector.GameData):
 	description.text = game_data.description
 	image.texture = game_data.image_texture
 	progress_bar.tint_progress = game_data.color.darkened(.4)
+	creators.text = "Creators: %s" % game_data.creators
